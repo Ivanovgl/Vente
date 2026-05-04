@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vente déménagement · Strasbourg</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f5f2;
+    --surface: #ffffff;
+    --border: #e5e2dc;
+    --border-strong: #ccc9c2;
+    --text: #1a1916;
+    --text-2: #6b6860;
+    --text-3: #a8a49e;
+    --accent: #1a1916;
+    --green-bg: #eef5e8;
+    --green-fg: #2d6a0d;
+    --blue-bg: #e8f0f9;
+    --blue-fg: #1a4a8a;
+    --sold-bg: #f0eeeb;
+    --sold-fg: #a8a49e;
+    --tag-bg: #f0eeeb;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 2rem;
+  }
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+  }
+  .header-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .lang-toggle {
+    display: flex;
+    gap: 2px;
+    background: var(--border);
+    padding: 2px;
+    border-radius: 6px;
+  }
+  .lang-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: none;
+    background: transparent;
+    color: var(--text-3);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .lang-btn.active {
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  h1 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(24px, 5vw, 36px);
+    font-weight: 300;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  .header-sub {
+    font-size: 14px;
+    color: var(--text-2);
+    margin-bottom: 1.75rem;
+  }
+  .contact-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .contact-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13px;
+    font-weight: 400;
+    padding: 8px 14px;
+    border-radius: 100px;
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+    color: var(--text);
+    text-decoration: none;
+    transition: background 0.12s, border-color 0.12s;
+  }
+  .contact-pill:hover { background: var(--tag-bg); }
+  .contact-pill .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-tg { background: #29b6f6; }
+  .dot-wa { background: #4caf50; }
+  .dot-vn { background: #e91e63; }
+
+  /* DIVIDER */
+  .divider {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    border: none;
+    border-top: 1px solid var(--border);
+  }
+
+  /* FILTERS */
+  .filters-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-right: 4px;
+  }
+  .filter-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    padding: 5px 13px;
+    border-radius: 100px;
+    border: 1px solid var(--border-strong);
+    background: transparent;
+    color: var(--text-2);
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+  .filter-btn:hover { border-color: var(--text-3); color: var(--text); }
+  .filter-btn.active {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+
+  /* GRID */
+  .grid-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 1.5rem 3rem;
+  }
+  .count-line {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text-3);
+    letter-spacing: 0.06em;
+    margin-bottom: 1rem;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 10px;
+  }
+
+  /* CARD */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover {
+    border-color: var(--border-strong);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .card.sold { opacity: 0.55; }
+
+  .card-img {
+    width: 100%;
+    aspect-ratio: 1;
+    background: var(--tag-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    position: absolute; inset: 0;
+    transition: opacity 0.2s;
+  }
+  .card-img .placeholder { position: relative; z-index: 1; }
+
+  /* GALLERY */
+  .gallery { position: relative; }
+  .gallery-track {
+    position: absolute; inset: 0;
+    display: flex;
+    overflow: hidden;
+  }
+  .gallery-track img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+  }
+  .gallery-arrow {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    z-index: 10;
+    background: rgba(255,255,255,0.85);
+    border: none;
+    border-radius: 50%;
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 12px;
+    color: var(--text);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .gallery:hover .gallery-arrow { opacity: 1; }
+  .gallery-arrow.prev { left: 6px; }
+  .gallery-arrow.next { right: 6px; }
+  .gallery-dots {
+    position: absolute;
+    bottom: 6px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 4px;
+    z-index: 10;
+  }
+  .gallery-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    transition: background 0.15s;
+    cursor: pointer;
+  }
+  .gallery-dot.active { background: #fff; }
+
+  .card-body {
+    padding: 10px 12px 12px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .card-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .sold .card-name { text-decoration: line-through; color: var(--text-3); }
+  .card-desc {
+    font-size: 12px;
+    color: var(--text-2);
+    line-height: 1.45;
+    margin-bottom: 10px;
+    flex: 1;
+  }
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+  }
+  .price {
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .sold .price { text-decoration: line-through; color: var(--text-3); }
+  .badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    padding: 3px 8px;
+    border-radius: 100px;
+  }
+  .badge-free { background: var(--green-bg); color: var(--green-fg); }
+  .badge-new { background: var(--blue-bg); color: var(--blue-fg); }
+  .badge-sold { background: var(--sold-bg); color: var(--sold-fg); }
+
+  .condition-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    margin-right: 4px;
+    flex-shrink: 0;
+  }
+  .cond-new { background: var(--green-fg); }
+  .cond-good { background: #f5a623; }
+  .cond-vgood { background: #7db83a; }
+
+  /* FOOTER */
+  footer {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 1.5rem 1.5rem 3rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-msg {
+    font-size: 13px;
+    color: var(--text-2);
+  }
+  .footer-mono {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--text-3);
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 480px) {
+    header { padding: 2rem 1rem 1.5rem; }
+    .grid-wrap { padding: 0 1rem 2rem; }
+    .filters-wrap { padding: 1rem; }
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    footer { padding: 1.5rem 1rem 2rem; }
+  }
+
+  /* LIGHTBOX */
+  .lb-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .lb-overlay.open { display: flex; }
+  .lb-img-wrap {
+    position: relative;
+    max-width: 92vw;
+    max-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lb-img-wrap img {
+    max-width: 92vw;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 4px;
+    user-select: none;
+    touch-action: pinch-zoom;
+  }
+  .lb-close {
+    position: fixed;
+    top: 18px; right: 22px;
+    background: none; border: none;
+    color: #fff; font-size: 28px;
+    cursor: pointer; z-index: 1010;
+    opacity: 0.8; line-height: 1;
+  }
+  .lb-close:hover { opacity: 1; }
+  .lb-arrow {
+    position: fixed;
+    top: 50%; transform: translateY(-50%);
+    background: rgba(255,255,255,0.12);
+    border: none; color: #fff;
+    font-size: 22px; width: 44px; height: 44px;
+    border-radius: 50%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1010; transition: background 0.15s;
+  }
+  .lb-arrow:hover { background: rgba(255,255,255,0.25); }
+  .lb-arrow.prev { left: 12px; }
+  .lb-arrow.next { right: 12px; }
+  .lb-counter {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 12px;
+    letter-spacing: 0.08em;
+  }
+
+  /* ADMIN PANEL */
+  .admin-btn {
+    position: fixed;
+    bottom: 20px; right: 20px;
+    background: var(--text);
+    color: var(--bg);
+    border: none; border-radius: 100px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 0.08em;
+    padding: 9px 16px;
+    cursor: pointer; z-index: 900;
+    opacity: 0.5; transition: opacity 0.15s;
+  }
+  .admin-btn:hover { opacity: 1; }
+  .admin-panel {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 950;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .admin-panel.open { display: flex; }
+  .admin-sheet {
+    background: var(--surface);
+    border-radius: 16px 16px 0 0;
+    padding: 1.5rem;
+    width: 100%; max-width: 480px;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  .admin-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 1rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .admin-close-btn {
+    background: none; border: none;
+    font-size: 20px; cursor: pointer; color: var(--text-3); line-height: 1;
+  }
+  .admin-login { display: flex; flex-direction: column; gap: 10px; }
+  .admin-input {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; padding: 10px 14px;
+    border: 1px solid var(--border-strong);
+    border-radius: 8px; background: var(--bg);
+    color: var(--text); width: 100%;
+  }
+  .admin-submit {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 500;
+    padding: 10px; border-radius: 8px;
+    border: none; background: var(--text);
+    color: var(--bg); cursor: pointer;
+  }
+  .admin-error {
+    font-size: 12px; color: #c0392b;
+    display: none;
+  }
+  .admin-list { display: flex; flex-direction: column; gap: 6px; }
+  .admin-item {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  .admin-item.is-sold { opacity: 0.5; }
+  .admin-item-name { flex: 1; }
+  .admin-toggle {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; padding: 4px 10px;
+    border-radius: 100px; border: 1px solid var(--border-strong);
+    background: transparent; color: var(--text-2);
+    cursor: pointer; flex-shrink: 0; margin-left: 10px;
+  }
+  .admin-toggle.sold-btn { background: #fdf0ef; color: #c0392b; border-color: #f5c6c2; }
+  .admin-logout {
+    margin-top: 1rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 0.06em;
+    background: none; border: none;
+    color: var(--text-3); cursor: pointer; text-decoration: underline;
+  }
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <span class="header-label">Strasbourg · 2026</span>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('fr',this)">FR</button>
+      <button class="lang-btn" onclick="setLang('en',this)">EN</button>
+    </div>
+  </div>
+  <h1 id="h-title">Je déménage —<br>je vends mes affaires</h1>
+  <p class="header-sub" id="h-sub">Retrait à la résidence · Remise rapide · Strasbourg</p>
+  <div class="contact-row">
+    <a class="contact-pill" href="https://t.me/Vortex322" target="_blank" id="btn-tg">
+      <span class="dot dot-tg"></span> Telegram
+    </a>
+    <a class="contact-pill" href="https://wa.me/33682782948" target="_blank" id="btn-wa">
+      <span class="dot dot-wa"></span> WhatsApp
+    </a>
+    <a class="contact-pill" href="https://www.vinted.fr/member/3135687086" target="_blank" id="btn-vn">
+      <span class="dot dot-vn"></span> Vinted
+    </a>
+  </div>
+</header>
+
+<hr class="divider">
+
+<div class="filters-wrap">
+  <span class="filter-label" id="filter-label">Filtrer</span>
+  <div id="filter-bar"></div>
+</div>
+
+<div class="grid-wrap">
+  <div class="count-line" id="count-line"></div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<footer>
+  <span class="footer-msg" id="footer-msg">Écris-moi — je réponds vite</span>
+  <span class="footer-mono" id="footer-mono">Tout à récupérer sur place</span>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lb-overlay" id="lb" onclick="lbBgClick(event)">
+  <button class="lb-close" onclick="lbClose()">×</button>
+  <button class="lb-arrow prev" onclick="lbNav(-1,event)">&#8249;</button>
+  <div class="lb-img-wrap">
+    <img id="lb-img" src="" alt="">
+  </div>
+  <button class="lb-arrow next" onclick="lbNav(1,event)">&#8250;</button>
+  <div class="lb-counter" id="lb-counter"></div>
+</div>
+
+<!-- ADMIN BUTTON -->
+<button class="admin-btn" onclick="openAdmin()">⚙ admin</button>
+
+<!-- ADMIN PANEL -->
+<div class="admin-panel" id="admin-panel" onclick="adminBgClick(event)">
+  <div class="admin-sheet" id="admin-sheet">
+    <div class="admin-title">
+      <span>Gestion des articles</span>
+      <button class="admin-close-btn" onclick="closeAdmin()">×</button>
+    </div>
+    <div id="admin-login-view" class="admin-login">
+      <input class="admin-input" type="password" id="admin-pwd" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')adminLogin()">
+      <button class="admin-submit" onclick="adminLogin()">Entrer</button>
+      <span class="admin-error" id="admin-error">Mot de passe incorrect</span>
+    </div>
+    <div id="admin-list-view" style="display:none">
+      <div class="admin-list" id="admin-list"></div>
+      <button class="admin-logout" onclick="adminLogout()">Se déconnecter</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const UI = {
+  fr: {
+    title: "Je déménage —<br>je vends mes affaires",
+    sub: "Retrait à la résidence · Remise rapide · Strasbourg",
+    filterLabel: "Filtrer",
+    all: "Tout", lighting: "Éclairage", furniture: "Mobilier", kitchen: "Cuisine", misc: "Divers",
+    sold: "vendu", free: "gratuit", newItem: "neuf",
+    count: n => `${n} article${n>1?'s':''}`,
+    footer: "Écris-moi — je réponds vite",
+    footerSub: "Tout à récupérer sur place",
+    condNew: "Neuf", condVGood: "Très bon état", condGood: "Bon état"
+  },
+  en: {
+    title: "Moving out —<br>selling my stuff",
+    sub: "Pick up at student residence · Quick handover · Strasbourg",
+    filterLabel: "Filter",
+    all: "All", lighting: "Lighting", furniture: "Furniture", kitchen: "Kitchen", misc: "Other",
+    sold: "sold", free: "free", newItem: "new",
+    count: n => `${n} item${n>1?'s':''}`,
+    footer: "Message me — I reply fast",
+    footerSub: "Pick up on site",
+    condNew: "New", condVGood: "Very good", condGood: "Good"
+  }
+};
+
+const items = [
+  // ÉCLAIRAGE
+  { id:1, emoji:"💡", cat:"lighting", price:"3,90 €", status:"ok", cond:"new",
+    fr:{ name:"Ampoules LED E27 ×2", desc:"60W, neuves sans étiquette" },
+    en:{ name:"E27 LED Bulbs ×2", desc:"60W, new without tag" } },
+  { id:2, emoji:"💡", cat:"lighting", price:"1,50 €", status:"ok", cond:"new",
+    fr:{ name:"Ampoule LED E27", desc:"60W, neuve sans étiquette" },
+    en:{ name:"E27 LED Bulb", desc:"60W, new without tag" } },
+  { id:3, emoji:"💡", cat:"lighting", price:"5,00 €", status:"ok", cond:"new",
+    fr:{ name:"Ampoules LED E27 ×3", desc:"7W, neuves sans étiquette" },
+    en:{ name:"E27 LED Bulbs ×3", desc:"7W, new without tag" } },
+
+  // MOBILIER
+  { id:4, emoji:"🪑", cat:"furniture", price:"125,00 €", status:"ok", cond:"good",
+    fr:{ name:"Fauteuil bureau Marky", desc:"Conforama, hauteur réglable, revêtement tissu" },
+    en:{ name:"Marky Office Chair", desc:"Conforama, height-adjustable, fabric upholstery" } },
+  { id:5, emoji:"🧺", cat:"furniture", price:"20,00 €", status:"ok", cond:"vgood",
+    fr:{ name:"Étendoir à linge", desc:"3 niveaux, pliable, peu encombrant" },
+    en:{ name:"Clothes Drying Rack", desc:"3-tier, foldable, space-saving" } },
+
+  // CUISINE
+  { id:8,  emoji:"🍽️", cat:"kitchen", price:"3,50 €", status:"ok", cond:"good",
+    fr:{ name:"Assiette dessert", desc:"CreaTable 20 cm" },
+    en:{ name:"Dessert Plate", desc:"CreaTable 20cm" } },
+  { id:9,  emoji:"🥣", cat:"kitchen", price:"3,50 €", status:"ok", cond:"vgood",
+    fr:{ name:"Bol de soupe", desc:"CreaTable" },
+    en:{ name:"Soup Bowl", desc:"CreaTable" } },
+  { id:10, emoji:"🍽️", cat:"kitchen", price:"4,00 €", status:"ok", cond:"good",
+    fr:{ name:"Assiette plate blanche", desc:"CreaTable 28 cm" },
+    en:{ name:"Flat Plate (white)", desc:"CreaTable 28cm" } },
+  { id:11, emoji:"🍽️", cat:"kitchen", price:"4,00 €", status:"ok", cond:"good",
+    fr:{ name:"Assiette plate bleue", desc:"CreaTable 28 cm" },
+    en:{ name:"Flat Plate (blue)", desc:"CreaTable 28cm" } },
+  { id:12, emoji:"🥛", cat:"kitchen", price:"1,80 €", status:"ok", cond:"vgood",
+    fr:{ name:"Gobelets en verre ×2", desc:"2 unités disponibles" },
+    en:{ name:"Glass Cups ×2", desc:"2 units available" } },
+  { id:14, emoji:"🫙", cat:"kitchen", price:"1,90 €", status:"ok", cond:"vgood",
+    fr:{ name:"Plat à four IKEA", desc:"En verre 1 L" },
+    en:{ name:"IKEA Baking Dish", desc:"Glass, 1L" } },
+  { id:15, emoji:"🫙", cat:"kitchen", price:"1,90 €", status:"ok", cond:"new",
+    fr:{ name:"Bocaux à épices ×3", desc:"Verre avec couvercle, 3 unités" },
+    en:{ name:"Spice Jars ×3", desc:"Glass with lids, 3 units" } },
+  { id:17, emoji:"🍺", cat:"kitchen", price:"3,00 €", status:"ok", cond:"vgood",
+    fr:{ name:"Verre à bière 50cl ×2", desc:"Verre transparent, 2 unités" },
+    en:{ name:"Beer Glass 50cl ×2", desc:"Clear glass, 2 units" } },
+  { id:18, emoji:"🥂", cat:"kitchen", price:"2,00 €", status:"ok", cond:"vgood",
+    fr:{ name:"Flûte à champagne ×2", desc:"Classique, verre transparent" },
+    en:{ name:"Champagne Flute ×2", desc:"Classic, clear glass" } },
+  { id:19, emoji:"🍷", cat:"kitchen", price:"2,00 €", status:"ok", cond:"vgood",
+    fr:{ name:"Verre à vin ×3", desc:"Classique, verre transparent" },
+    en:{ name:"Wine Glass ×3", desc:"Classic, clear glass" } },
+
+  // DIVERS
+  { id:6,  emoji:"🚲", cat:"misc", price:"7,00 €", status:"ok", cond:"vgood",
+    fr:{ name:"Pompe à main VTC", desc:"Mini pompe vélo, vissage Presta/Schrader/Dunlop + flexible" },
+    en:{ name:"VTC Hand Pump", desc:"Mini bike pump, Presta/Schrader/Dunlop + hose" } },
+  { id:7,  emoji:"💨", cat:"misc", price:"10,00 €", status:"ok", cond:"good",
+    fr:{ name:"Sèche-cheveux Liabel", desc:"1200W, 2 vitesses" },
+    en:{ name:"Liabel Hair Dryer", desc:"1200W, 2 speeds" } },
+  { id:13, emoji:"🌸", cat:"misc", price:"5,40 €", status:"ok", cond:"vgood",
+    fr:{ name:"Diffuseur Air Wick", desc:"5 niveaux d'intensité, diffuseur + 2 recharges (Délices d'été)" },
+    en:{ name:"Air Wick Diffuser", desc:"5 intensity levels, diffuser + 2 refills (Summer Delights)" } },
+  { id:16, emoji:"🪝", cat:"misc", price:"2,50 €", status:"ok", cond:"vgood",
+    fr:{ name:"Cintres bois ×8", desc:"Bois massif, pour manteaux et doudounes" },
+    en:{ name:"Wooden Hangers ×8", desc:"Solid wood, for coats and down jackets" } },
+  { id:20, emoji:"🍞", cat:"misc", price:"40,00 €", status:"ok", cond:"good",
+    fr:{ name:"Grille-pain Dark Vador", desc:"Forme casque Vador, imprime le logo Star Wars sur les tartines" },
+    en:{ name:"Darth Vader Toaster", desc:"Vader helmet shape, prints Star Wars logo on toast" } },
+  { id:21, emoji:"🌀", cat:"misc", price:"32,00 €", status:"ok", cond:"vgood",
+    fr:{ name:"Ventilateur Bestherm", desc:"Hi Flow 30, 50W, 3 vitesses, silencieux" },
+    en:{ name:"Bestherm Fan", desc:"Hi Flow 30, 50W, 3 speeds, quiet" } },
+  { id:22, emoji:"🧺", cat:"misc", price:"3,50 €", status:"ok", cond:"new",
+    fr:{ name:"Lessive Lenor", desc:"Hypoallergénique, neuve" },
+    en:{ name:"Lenor Laundry Detergent", desc:"Hypoallergenic, new" } },
+  { id:23, emoji:"🧼", cat:"misc", price:"3,50 €", status:"ok", cond:"new",
+    fr:{ name:"Nettoyant anti-calcaire", desc:"Antikal, neuf" },
+    en:{ name:"Anti-Limescale Cleaner", desc:"Antikal, new" } },
+];
+
+// Photos by item id — arrays support multiple images
+const photos = {
+  1:  ["2ampoules1.jpg","2ampoules2.jpg"],
+  2:  ["1ampoule1.jpg","1ampoule2.jpg"],
+  3:  ["3ampoules1.jpg","3ampoules2.jpg"],
+  4:  ["fauteuil1.jpg","fauteuil2.jpg","fauteuil3.jpg","fauteuil4.jpg","fauteuil5.jpg","fauteuil6.jpg","fauteuil7.jpg","fauteuil8.jpg","fauteuil9.jpg","fauteuil10.jpg"],
+  5:  ["sechoir1.jpg","sechoir2.jpg","sechoir3.jpg"],
+  6:  ["pompe1.jpg","pompe2.jpg","pompe3.jpg"],
+  7:  ["sechecheveux1.jpg","sechecheveux2.jpg","sechecheveux3.jpg","sechecheveux4.jpg"],
+  8:  ["assiettedessert1.jpg","assiettedessert2.jpg"],
+  9:  ["bol1.jpg","bol2.jpg","assiettestout.jpg"],
+  10: ["assietteplate1.jpg","assietteplate2.jpg","assiettestout.jpg"],
+  11: ["assietteplateb1.jpg","assietteplateb2.jpg","assiettestout.jpg"],
+  12: ["gobelets1.jpg","gobelets2.jpg"],
+  13: ["desodorisant1.jpg","desodorisant2.jpg","desodorisant3.jpg","desodorisant4.jpg","desodorisant5.jpg","desodorisant6.jpg"],
+  14: ["platafour1.jpg","platafour2.jpg","platafour3.jpg"],
+  15: ["bocaux1.jpg","bocaux2.jpg"],
+  16: ["cintres1.jpg","cintres2.jpg","cintres3.jpg"],
+  17: ["verrebiere1.jpg","verrebiere2.jpg","verrebiere3.jpg"],
+  18: ["verrechampagne1.jpg","verrechampagne2.jpg","verrechampagne3.jpg"],
+  19: ["verrevin1.jpg","verrevin2.jpg","verrevin3.jpg","verrevin4.jpg"],
+  20: ["Grillepain1.jpg","Grillepain2.jpg","Grillepain3.jpg","Grillepain4.jpg","Grillepain5.jpg"],
+  21: ["ventilateur1.jpg","ventilateur2.jpg","ventilateur3.jpg","ventilateur4.jpg","ventilateur5.jpg","ventilateur6.jpg"],
+  22: ["lessive1.jpg","lessive2.jpg"],
+  23: ["antikal1.jpg","antikal2.jpg"],
+};
+
+// Gallery state
+const galleryState = {};
+
+function buildGallery(itemId, imgs) {
+  galleryState[itemId] = { idx: 0, imgs };
+  const count = imgs.length;
+  const dotsHtml = count > 1
+    ? `<div class="gallery-dots">${imgs.map((_,i) => `<div class="gallery-dot ${i===0?'active':''}" onclick="goTo(${itemId},${i},event)"></div>`).join('')}</div>`
+    : '';
+  const arrowsHtml = count > 1
+    ? `<button class="gallery-arrow prev" onclick="gallerNav(${itemId},-1,event)">&#8249;</button><button class="gallery-arrow next" onclick="gallerNav(${itemId},1,event)">&#8250;</button>`
+    : '';
+  const imgsHtml = imgs.map((src,i) =>
+    `<img src="${src}" alt="" loading="${i===0?'eager':'lazy'}" style="transform:translateX(${i*100}%)">`
+  ).join('');
+  return `<div class="gallery-track" id="gt-${itemId}">${imgsHtml}</div>${arrowsHtml}${dotsHtml}`;
+}
+
+function gallerNav(itemId, dir, e) {
+  e && e.stopPropagation();
+  const s = galleryState[itemId];
+  if (!s) return;
+  goTo(itemId, (s.idx + dir + s.imgs.length) % s.imgs.length, e);
+}
+
+function goTo(itemId, idx, e) {
+  e && e.stopPropagation();
+  const s = galleryState[itemId];
+  if (!s) return;
+  s.idx = idx;
+  const track = document.getElementById('gt-' + itemId);
+  if (track) track.querySelectorAll('img').forEach((img, i) => {
+    img.style.transform = `translateX(${(i - idx) * 100}%)`;
+  });
+  const card = track && track.closest('.card-img');
+  if (card) card.querySelectorAll('.gallery-dot').forEach((d, i) => {
+    d.classList.toggle('active', i === idx);
+  });
+}
+
+let lang = 'fr';
+let currentFilter = 'all';
+const cats = ['all','lighting','furniture','kitchen','misc'];
+
+function setLang(l, btn) {
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('h-title').innerHTML = UI[lang].title;
+  document.getElementById('h-sub').textContent = UI[lang].sub;
+  document.getElementById('footer-msg').textContent = UI[lang].footer;
+  document.getElementById('footer-mono').textContent = UI[lang].footerSub;
+  document.getElementById('filter-label').textContent = UI[lang].filterLabel;
+  renderFilters();
+  renderGrid();
+}
+
+function filterItems(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGrid();
+}
+
+function renderFilters() {
+  document.getElementById('filter-bar').innerHTML = cats.map(c =>
+    `<button class="filter-btn ${currentFilter===c?'active':''}" onclick="filterItems('${c}',this)">${UI[lang][c]}</button>`
+  ).join(' ');
+}
+
+function condClass(c) {
+  if (c==='new') return 'cond-new';
+  if (c==='vgood') return 'cond-vgood';
+  return 'cond-good';
+}
+function condLabel(c) {
+  if (c==='new') return UI[lang].condNew;
+  if (c==='vgood') return UI[lang].condVGood;
+  return UI[lang].condGood;
+}
+
+function renderGrid() {
+  const filtered = currentFilter==='all' ? items : items.filter(i=>i.cat===currentFilter);
+  document.getElementById('count-line').textContent = UI[lang].count(filtered.length);
+
+  document.getElementById('grid').innerHTML = filtered.map(item => {
+    const d = item[lang];
+    const sold = isSold(item.id) || item.status==='sold';
+    const soldClass = sold ? 'sold' : '';
+    let badge = '';
+    if (sold) badge = `<span class="badge badge-sold">${UI[lang].sold}</span>`;
+    else if (item.status==='free') badge = `<span class="badge badge-free">${UI[lang].free}</span>`;
+    else if (item.cond==='new') badge = `<span class="badge badge-new">${UI[lang].newItem}</span>`;
+
+    const imgs = photos[item.id];
+    let imgContent;
+    if (imgs && imgs.length > 0) {
+      imgContent = buildGallery(item.id, imgs);
+    } else {
+      imgContent = `<span class="placeholder">${item.emoji}</span>`;
+    }
+
+    const clickAttr = imgs && imgs.length > 0
+      ? `onclick="lbOpen(${JSON.stringify(imgs)}, galleryState[${item.id}]?.idx || 0)" style="cursor:zoom-in"`
+      : '';
+
+    return `<div class="card ${soldClass}">
+      <div class="card-img${imgs && imgs.length > 0 ? ' gallery' : ''}" ${clickAttr}>${imgContent}</div>
+      <div class="card-body">
+        <div class="card-name">${d.name}</div>
+        <div class="card-desc">${d.desc}</div>
+        <div class="card-footer">
+          <span class="price">${item.price}</span>
+          ${badge}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── SOLD STATE (persisted in localStorage) ──
+const SOLD_KEY = 'vente_sold_ids';
+function getSoldIds() {
+  try { return JSON.parse(localStorage.getItem(SOLD_KEY) || '[]'); } catch { return []; }
+}
+function saveSoldIds(ids) {
+  localStorage.setItem(SOLD_KEY, JSON.stringify(ids));
+}
+function isSold(id) { return getSoldIds().includes(id); }
+function toggleSold(id) {
+  let ids = getSoldIds();
+  if (ids.includes(id)) ids = ids.filter(x => x !== id);
+  else ids.push(id);
+  saveSoldIds(ids);
+  renderGrid();
+  renderAdminList();
+}
+
+// ── LIGHTBOX ──
+let lbImgs = [], lbIdx = 0;
+
+function lbOpen(imgs, idx) {
+  lbImgs = imgs; lbIdx = idx;
+  document.getElementById('lb').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  lbShow();
+}
+function lbClose() {
+  document.getElementById('lb').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function lbShow() {
+  document.getElementById('lb-img').src = lbImgs[lbIdx];
+  document.getElementById('lb-counter').textContent =
+    lbImgs.length > 1 ? `${lbIdx+1} / ${lbImgs.length}` : '';
+  document.querySelector('.lb-arrow.prev').style.display = lbImgs.length > 1 ? '' : 'none';
+  document.querySelector('.lb-arrow.next').style.display = lbImgs.length > 1 ? '' : 'none';
+}
+function lbNav(dir, e) {
+  e && e.stopPropagation();
+  lbIdx = (lbIdx + dir + lbImgs.length) % lbImgs.length;
+  lbShow();
+}
+function lbBgClick(e) { if (e.target === document.getElementById('lb')) lbClose(); }
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lb').classList.contains('open')) return;
+  if (e.key === 'ArrowRight') lbNav(1, null);
+  if (e.key === 'ArrowLeft') lbNav(-1, null);
+  if (e.key === 'Escape') lbClose();
+});
+
+// ── ADMIN ──
+const ADMIN_PASS = 'vortex2026';
+let adminAuthed = false;
+
+function openAdmin() {
+  document.getElementById('admin-panel').classList.add('open');
+  if (adminAuthed) showAdminList();
+}
+function closeAdmin() {
+  document.getElementById('admin-panel').classList.remove('open');
+}
+function adminBgClick(e) {
+  if (e.target === document.getElementById('admin-panel')) closeAdmin();
+}
+function adminLogin() {
+  const val = document.getElementById('admin-pwd').value;
+  if (val === ADMIN_PASS) {
+    adminAuthed = true;
+    document.getElementById('admin-error').style.display = 'none';
+    document.getElementById('admin-pwd').value = '';
+    showAdminList();
+  } else {
+    document.getElementById('admin-error').style.display = 'block';
+  }
+}
+function adminLogout() {
+  adminAuthed = false;
+  document.getElementById('admin-list-view').style.display = 'none';
+  document.getElementById('admin-login-view').style.display = 'flex';
+}
+function showAdminList() {
+  document.getElementById('admin-login-view').style.display = 'none';
+  document.getElementById('admin-list-view').style.display = 'block';
+  renderAdminList();
+}
+function renderAdminList() {
+  document.getElementById('admin-list').innerHTML = items.map(item => {
+    const sold = isSold(item.id);
+    return `<div class="admin-item ${sold ? 'is-sold' : ''}">
+      <span class="admin-item-name">${item.fr.name}</span>
+      <button class="admin-toggle ${sold ? 'sold-btn' : ''}" onclick="toggleSold(${item.id})">
+        ${sold ? 'Vendu ✓' : 'Disponible'}
+      </button>
+    </div>`;
+  }).join('');
+}
+
+renderFilters();
+renderGrid();
+</script>
+</body>
+</html>
